@@ -3979,35 +3979,6 @@ esac
 AC_SUBST(TUNE_SQR_OBJ)
 
 
-# Configs for demos/pexpr.c.
-#
-AC_CONFIG_FILES(demos/pexpr-config.h:demos/pexpr-config-h.in)
-GMP_SUBST_CHECK_FUNCS(clock, cputime, getrusage, gettimeofday, sigaction, sigaltstack, sigstack)
-GMP_SUBST_CHECK_HEADERS(sys/resource.h)
-AC_CHECK_TYPES([stack_t], HAVE_STACK_T_01=1, HAVE_STACK_T_01=0,
-               [#include <signal.h>])
-AC_SUBST(HAVE_STACK_T_01)
-
-# Configs for demos/calc directory
-#
-# AC_SUBST+AC_CONFIG_FILES is used for calc-config.h, rather than AC_DEFINE+
-# AC_CONFIG_HEADERS, since with the latter automake (1.8) will then put the
-# directory (ie. demos/calc) into $(DEFAULT_INCLUDES) for every Makefile.in,
-# which would look very strange.
-#
-# -lcurses is required by libreadline.  On a typical SVR4 style system this
-# normally doesn't have to be given explicitly, since libreadline.so will
-# have a NEEDED record for it.  But if someone for some reason is using only
-# a static libreadline.a then we must give -lcurses.  Readline (as of
-# version 4.3) doesn't use libtool, so we can't rely on a .la to cover
-# necessary dependencies.
-#
-# On a couple of systems we've seen libreadline available, but the headers
-# not in the default include path, so check for readline/readline.h.  We've
-# also seen readline/history.h missing, not sure if that's just a broken
-# install or a very old version, but check that too.
-#
-AC_CONFIG_FILES(demos/calc/calc-config.h:demos/calc/calc-config-h.in)
 LIBCURSES=
 if test $with_readline != no; then
   AC_CHECK_LIB(ncurses, tputs, [LIBCURSES=-lncurses],
@@ -4049,8 +4020,7 @@ AC_OUTPUT(Makefile							\
   tests/mpf/Makefile tests/mpn/Makefile tests/mpq/Makefile		\
   tests/mpz/Makefile tests/rand/Makefile tests/misc/Makefile		\
   tests/cxx/Makefile							\
-  doc/Makefile tune/Makefile						\
-  demos/Makefile demos/calc/Makefile demos/expr/Makefile		\
+  tune/Makefile						\
   gmp.h:gmp-h.in gmp.pc:gmp.pc.in gmpxx.pc:gmpxx.pc.in)
 
 AC_MSG_NOTICE([summary of build options:

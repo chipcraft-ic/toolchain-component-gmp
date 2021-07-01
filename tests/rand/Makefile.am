@@ -22,9 +22,6 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/tests
 AM_LDFLAGS = -no-install
 LDADD = $(top_builddir)/tests/libtests.la $(top_builddir)/libgmp.la
 
-check_PROGRAMS = t-iset t-lc2exp t-mt t-rand t-urbui t-urmui t-urndmm
-TESTS = $(check_PROGRAMS)
-
 EXTRA_PROGRAMS = findlc gen gen.static spect stat
 gen_static_SOURCES = gen.c
 gen_static_LDFLAGS = -static
