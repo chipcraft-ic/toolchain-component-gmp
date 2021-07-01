@@ -32,43 +32,6 @@ LDADD = -L$(top_builddir)/.libs \
   $(top_builddir)/libgmp.la \
   -lm
 
-if WANT_CXX
-check_PROGRAMS = t-binary t-cast t-cxx11 \
-  t-headers t-iostream t-istream t-locale t-misc t-mix \
-  t-ops t-ops2qf t-ops2f t-ops3 t-ostream t-prec \
-  t-ternary t-unary \
-  t-do-exceptions-work-at-all-with-this-compiler \
-  t-ops2z t-assign t-constr t-rand
-
-TESTS = $(check_PROGRAMS)
-endif
-
-EXTRA_DIST = t-ops2.h
-
-t_assign_SOURCES  = t-assign.cc
-t_binary_SOURCES  = t-binary.cc
-t_cast_SOURCES    = t-cast.cc
-t_constr_SOURCES  = t-constr.cc
-t_cxx11_SOURCES   = t-cxx11.cc
-t_headers_SOURCES = t-headers.cc
-t_iostream_SOURCES= t-iostream.cc
-t_istream_SOURCES = t-istream.cc
-t_locale_SOURCES  = t-locale.cc clocale.c
-t_misc_SOURCES    = t-misc.cc
-t_mix_SOURCES     = t-mix.cc
-t_ops_SOURCES     = t-ops.cc
-t_ops2z_SOURCES   = t-ops2z.cc
-t_ops2qf_SOURCES  = t-ops2qf.cc
-t_ops2f_SOURCES   = t-ops2f.cc
-t_ops3_SOURCES    = t-ops3.cc
-t_ostream_SOURCES = t-ostream.cc
-t_prec_SOURCES    = t-prec.cc
-t_rand_SOURCES    = t-rand.cc
-t_ternary_SOURCES = t-ternary.cc
-t_unary_SOURCES   = t-unary.cc
-t_do_exceptions_work_at_all_with_this_compiler_SOURCES = \
-  t-do-exceptions-work-at-all-with-this-compiler.cc
-
 $(top_builddir)/tests/libtests.la:
 	cd $(top_builddir)/tests; $(MAKE) $(AM_MAKEFLAGS) libtests.la
 
