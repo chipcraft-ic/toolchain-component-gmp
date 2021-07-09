@@ -826,7 +826,7 @@ AC_DEFUN([GMP_PROG_CC_WORKS_PART_TEST],
 [$3]
 EOF
   echo "Test compile: [$2]" >&AC_FD_CC
-  gmp_compile="$1 conftest.c >&AC_FD_CC"
+  gmp_compile="$1 $LDFLAGS conftest.c >&AC_FD_CC"
   if AC_TRY_EVAL(gmp_compile); then
     cc_works_part=yes
     if test "$cross_compiling" = no; then
@@ -873,7 +873,7 @@ long long  bar () { return foo; }
 int main () { return 0; }
 EOF
 gmp_prog_cc_works=no
-gmp_compile="$1 -c conftest.c >&AC_FD_CC"
+gmp_compile="$1 $LDFLAGS -c conftest.c >&AC_FD_CC"
 if AC_TRY_EVAL(gmp_compile); then
   gmp_prog_cc_works=yes
 else
@@ -920,7 +920,7 @@ main ()
 }]
 EOF
 gmp_c_testlist_sizeof=no
-gmp_compile="$1 -c conftest.c >&AC_FD_CC"
+gmp_compile="$1 $LDFLAGS -c conftest.c >&AC_FD_CC"
 if AC_TRY_EVAL(gmp_compile); then
   gmp_c_testlist_sizeof=yes
 fi
@@ -948,7 +948,7 @@ AC_DEFUN([GMP_PROG_CC_IS_GNU],
   choke me
 #endif
 EOF
-gmp_compile="$1 -c conftest.c >&AC_FD_CC"
+gmp_compile="$1 $LDFLAGS -c conftest.c >&AC_FD_CC"
 if AC_TRY_EVAL(gmp_compile); then
   rm -f conftest*
   AC_MSG_CHECKING([whether $1 is gcc])
@@ -1016,7 +1016,7 @@ cat >conftest.c <<\EOF
 int bar () { return foo; }
 ]EOF
 tmp_got_emitted=no
-gmp_compile="$1 -fPIC -S conftest.c >&AC_FD_CC 2>&1"
+gmp_compile="$1 $LDFLAGS -fPIC -S conftest.c >&AC_FD_CC 2>&1"
 if AC_TRY_EVAL(gmp_compile); then
   if grep "addl.*_GLOBAL_OFFSET_TABLE_.*eax" conftest.s >/dev/null; then
     tmp_got_emitted=yes
@@ -1147,7 +1147,7 @@ AC_DEFUN([GMP_GCC_NO_CPP_PRECOMP],
   cat >conftest.c <<EOF
 int main () { return 0; }
 EOF
-  gmp_compile="$2 $3 -no-cpp-precomp conftest.c >conftest.out 2>&1"
+  gmp_compile="$2 $3 $LDFLAGS -no-cpp-precomp conftest.c >conftest.out 2>&1"
   if AC_TRY_EVAL(gmp_compile); then
     if grep "unrecognized option.*-no-cpp-precomp" conftest.out >/dev/null; then : ;
     else
@@ -1206,7 +1206,7 @@ result=no
 cat >conftest.c <<EOF
 int main () {}
 EOF
-gmp_compile="$1 $2 -c conftest.c >conftest.out 2>&1"
+gmp_compile="$1 $2 $LDFLAGS -c conftest.c >conftest.out 2>&1"
 if AC_TRY_EVAL(gmp_compile); then
   if grep "Unknown CPU identifier" conftest.out >/dev/null; then : ;
   else
@@ -1258,11 +1258,11 @@ result=no
 cat >conftest.c <<EOF
 EOF
 echo "with empty conftest.c" >&AC_FD_CC
-gmp_compile="$1 -c conftest.c >&AC_FD_CC 2>&1"
+gmp_compile="$1 $LDFLAGS -c conftest.c >&AC_FD_CC 2>&1"
 if AC_TRY_EVAL(gmp_compile); then : ;
 else
   # empty fails
-  gmp_compile="$1 -Wa,-oldas -c conftest.c >&AC_FD_CC 2>&1"
+  gmp_compile="$1 $LDFLAGS -Wa,-oldas -c conftest.c >&AC_FD_CC 2>&1"
   if AC_TRY_EVAL(gmp_compile); then
     # but with -Wa,-oldas it works
     result=yes
@@ -1328,7 +1328,7 @@ _main:
 	xorl	%eax, %eax
 	ret
 EOF
-  gmp_compile="$1 conftest.s -o conftest >&AC_FD_CC"
+  gmp_compile="$1 $LDFLAGS conftest.s -o conftest >&AC_FD_CC"
   if AC_TRY_EVAL(gmp_compile); then
     if AC_TRY_COMMAND([./a.out || ./b.out || ./a.exe || ./a_out.exe || ./conftest]); then
       gmp_cv_os_x86_xmm=yes
@@ -1416,7 +1416,7 @@ result=no
 cat >conftest.s <<EOF
 	.level 2.0
 EOF
-gmp_compile="$1 -c conftest.s >&AC_FD_CC 2>&1"
+gmp_compile="$1 $LDFLAGS -c conftest.s >&AC_FD_CC 2>&1"
 if AC_TRY_EVAL(gmp_compile); then
   result=yes
 else
@@ -1752,7 +1752,7 @@ AC_CACHE_CHECK([if globals are prefixed by underscore],
 cat >conftest.c <<EOF
 int gurkmacka;
 EOF
-gmp_compile="$CC $CFLAGS $CPPFLAGS -c conftest.c >&AC_FD_CC"
+gmp_compile="$CC $CFLAGS $CPPFLAGS $LDFLAGS -c conftest.c >&AC_FD_CC"
 if AC_TRY_EVAL(gmp_compile); then
   $NM conftest.$OBJEXT >conftest.out
   if grep "[[ 	]]_gurkmacka" conftest.out >/dev/null; then
@@ -1984,7 +1984,7 @@ const int foo[[]] = {1,2,3};
 EOF
 echo "Test program:" >&AC_FD_CC
 cat conftest.c >&AC_FD_CC
-gmp_compile="$CC $CFLAGS $CPPFLAGS -S conftest.c >&AC_FD_CC"
+gmp_compile="$CC $CFLAGS $CPPFLAGS $LDFLAGS -S conftest.c >&AC_FD_CC"
 if AC_TRY_EVAL(gmp_compile); then
   echo "Compiler output:" >&AC_FD_CC
   cat conftest.s >&AC_FD_CC
@@ -2382,7 +2382,7 @@ for tmp_underscore in "" "_"; do
 ${tmp_gsym_prefix}main$gmp_cv_asm_label_suffix
 	addl	$ ${tmp_underscore}_GLOBAL_OFFSET_TABLE_, %ebx
 EOF
-  gmp_compile="$CCAS $CFLAGS $CPPFLAGS $lt_prog_compiler_pic conftest.s >&AC_FD_CC && $CC $CFLAGS $CPPFLAGS $lt_prog_compiler_pic conftest.$OBJEXT >&AC_FD_CC"
+  gmp_compile="$CCAS $CFLAGS $CPPFLAGS $LDFLAGS $lt_prog_compiler_pic conftest.s >&AC_FD_CC && $CC $CFLAGS $CPPFLAGS $lt_prog_compiler_pic conftest.$OBJEXT >&AC_FD_CC"
   if AC_TRY_EVAL(gmp_compile); then
     if test "$tmp_underscore" = "_"; then
       gmp_cv_asm_x86_got_underscore=yes
@@ -2504,7 +2504,7 @@ cat >conftest.s <<\EOF
 	.byte	254, 220, 186, 152, 118, 84, 50, 16
 ]EOF
 tmp_got_good=yes
-gmp_compile="$1 -fPIC -o conftest.o -c conftest.s >&AC_FD_CC 2>&1"
+gmp_compile="$1 $LDFLAGS -fPIC -o conftest.o -c conftest.s >&AC_FD_CC 2>&1"
 if AC_TRY_EVAL(gmp_compile); then
   tmp_got_good=`od -b conftest.o | $AWK -f conftest.awk`
 fi
@@ -3019,7 +3019,7 @@ int *bar() { return &foo; }
 EOF
 echo "Test program:" >&AC_FD_CC
 cat conftest.c >&AC_FD_CC
-gmp_compile="$CC $CFLAGS $CPPFLAGS -S conftest.c >&AC_FD_CC"
+gmp_compile="$CC $CFLAGS $CPPFLAGS $LDFLAGS -S conftest.c >&AC_FD_CC"
 if AC_TRY_EVAL(gmp_compile); then
   echo "Compiler output:" >&AC_FD_CC
   cat conftest.s >&AC_FD_CC
@@ -3164,7 +3164,7 @@ AC_DEFUN([GMP_C_ATTRIBUTE_MALLOC],
 [cat >conftest.c <<EOF
 void *foo (int x) __attribute__ ((malloc));
 EOF
-gmp_compile="$CC $CFLAGS $CPPFLAGS -c conftest.c >conftest.out 2>&1"
+gmp_compile="$CC $CFLAGS $CPPFLAGS $LDFLAGS -c conftest.c >conftest.out 2>&1"
 if AC_TRY_EVAL(gmp_compile); then
   if grep "attribute directive ignored" conftest.out >/dev/null; then
     gmp_cv_c_attribute_malloc=no
@@ -3279,7 +3279,7 @@ int main(){
   return 0;
 }]
 EOF
-gmp_compile="$CC $CFLAGS $CPPFLAGS conftest.c -o conftest$EXEEXT >&AC_FD_CC 2>&1"
+gmp_compile="$CC $CFLAGS $CPPFLAGS $LDFLAGS conftest.c -o conftest$EXEEXT >&AC_FD_CC 2>&1"
 if AC_TRY_EVAL(gmp_compile); then
 cat >conftest.awk <<\EOF
 [
@@ -3827,7 +3827,7 @@ main ()
   return 0;
 }
 EOF
-gmp_compile="$1 conftest.c"
+gmp_compile="$1 $LDFLAGS conftest.c"
 cc_for_build_works=no
 if AC_TRY_EVAL(gmp_compile); then
   if (./a.out || ./b.out || ./a.exe || ./a_out.exe || ./conftest) >&AC_FD_CC 2>&1; then
@@ -3859,7 +3859,7 @@ if test -z "$CPP_FOR_BUILD"; then
 #define FOO BAR
 EOF
   for i in "$CC_FOR_BUILD -E" "$CC_FOR_BUILD -E -traditional-cpp" "/lib/cpp"; do
-    gmp_compile="$i conftest.c"
+    gmp_compile="$i $LDFLAGS conftest.c"
     if AC_TRY_EVAL(gmp_compile) >&AC_FD_CC 2>&1; then
       gmp_cv_prog_cpp_for_build=$i
       break
@@ -3902,7 +3902,7 @@ main ()
 }
 EOF
 for i in .exe ,ff8 ""; do
-  gmp_compile="$CC_FOR_BUILD conftest.c -o conftest$i"
+  gmp_compile="$CC_FOR_BUILD $LDFLAGS conftest.c -o conftest$i"
   if AC_TRY_EVAL(gmp_compile); then
     if (./conftest) 2>&AC_FD_CC; then
       gmp_cv_prog_exeext_for_build=$i
@@ -3937,7 +3937,7 @@ main (int argc, char **argv)
   return 0;
 }
 EOF
-gmp_compile="$CC_FOR_BUILD conftest.c"
+gmp_compile="$CC_FOR_BUILD $LDFLAGS conftest.c"
 if AC_TRY_EVAL(gmp_compile); then
   gmp_cv_c_for_build_ansi=yes
 else
@@ -3978,7 +3978,7 @@ foo ()
   return log (d);
 }
 EOF
-gmp_compile="$CC_FOR_BUILD conftest.c -lm"
+gmp_compile="$CC_FOR_BUILD $LDFLAGS conftest.c -lm"
 if AC_TRY_EVAL(gmp_compile); then
   gmp_cv_check_libm_for_build=-lm
 else
