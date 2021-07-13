@@ -2562,7 +2562,7 @@ if test $enable_cxx != no; then
   #
   for cxxflags_choice in $cxxflags_list; do
     eval CXXFLAGS=\"\$cxxflags_$cxxflags_choice\"
-    GMP_PROG_CXX_WORKS($CXX $CPPFLAGS $CXXFLAGS,
+    GMP_PROG_CXX_WORKS($CXX $CPPFLAGS $CXXFLAGS $LDFLAGS,
       [want_cxx=yes
       break])
   done
