@@ -10000,7 +10000,7 @@ rm -f conftest* a.out b.out a.exe a_out.exe
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $cc_for_build_works" >&5
 $as_echo "$cc_for_build_works" >&6; }
 if test "$cc_for_build_works" = yes; then
-  CC_FOR_BUILD=$HOST_CC
+  CC_FOR_BUILD="$HOST_CC $LDFLAGS"
 else
   as_fn_error $? "Specified HOST_CC doesn't seem to work" "$LINENO" 5
 fi
@@ -10033,7 +10033,7 @@ rm -f conftest* a.out b.out a.exe a_out.exe
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $cc_for_build_works" >&5
 $as_echo "$cc_for_build_works" >&6; }
 if test "$cc_for_build_works" = yes; then
-  CC_FOR_BUILD=$i
+  CC_FOR_BUILD="$i $LDFLAGS"
        break
 else
   :
@@ -10509,7 +10509,7 @@ if test "$gmp_prog_cxx_works" = yes; then
 int main (void) { return 0; }
 EOF
   echo "Test compile: " >&5
-  gmp_cxxcompile="$CXX $CPPFLAGS $CXXFLAGS conftest.cc >&5"
+  gmp_cxxcompile="$CXX $CPPFLAGS $CXXFLAGS $LDFLAGS conftest.cc >&5"
   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$gmp_cxxcompile\""; } >&5
   (eval $gmp_cxxcompile) 2>&5
   ac_status=$?
@@ -10549,7 +10549,7 @@ using namespace foo;
 int main (void) { return 0; }
 EOF
   echo "Test compile: namespace" >&5
-  gmp_cxxcompile="$CXX $CPPFLAGS $CXXFLAGS conftest.cc >&5"
+  gmp_cxxcompile="$CXX $CPPFLAGS $CXXFLAGS $LDFLAGS conftest.cc >&5"
   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$gmp_cxxcompile\""; } >&5
   (eval $gmp_cxxcompile) 2>&5
   ac_status=$?
@@ -10595,7 +10595,7 @@ void someoutput (void) { std::cout << 123; }
 int main (void) { return 0; }
 EOF
   echo "Test compile: std iostream" >&5
-  gmp_cxxcompile="$CXX $CPPFLAGS $CXXFLAGS conftest.cc >&5"
+  gmp_cxxcompile="$CXX $CPPFLAGS $CXXFLAGS $LDFLAGS conftest.cc >&5"
   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$gmp_cxxcompile\""; } >&5
   (eval $gmp_cxxcompile) 2>&5
   ac_status=$?
